@@ -30,7 +30,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ var.VERSION }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
 
   increment_version:
     runs-on: ubuntu-latest
