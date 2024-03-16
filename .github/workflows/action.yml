@@ -41,15 +41,18 @@ jobs:
           push: false
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}  # Using GitHub run number for versioning
 
+
       - name: Scan the Docker image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }} 
+          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ env.VERSION }} 
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+
 
       - name: Push Docker image
         if: success() # This step will only run if the previous Trivy scan is successful
