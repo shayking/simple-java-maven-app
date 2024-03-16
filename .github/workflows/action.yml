@@ -47,7 +47,7 @@ jobs:
         id: trivy_scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.docker_build.outputs.image }}
+          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ github.run_number }}
           format: 'table'
           exit-code: '1'
           ignore-unfixed: false
