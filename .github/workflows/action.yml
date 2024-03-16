@@ -46,7 +46,7 @@ jobs:
         uses: crazy-max/ghaction-container-scan@v3
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
-
+          severity_threshold: HIGH
 
 
       - name: Push Docker image
