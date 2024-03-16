@@ -34,22 +34,21 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        id: docker_build
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: false
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }} 
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ github.run_number }} # Using GitHub run number for versioning
 
       - name: Scan the Docker image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }} 
+          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ github.run_number }}
           format: 'table'
-          exit-code: '1' 
+          exit-code: '1'
           ignore-unfixed: false
-          severity: 'CRITICAL,HIGH' # Fail only for CRITICAL and HIGH severities
+          severity: 'CRITICAL,HIGH'
 
       - name: Push Docker image
         if: success() # This step will only run if the previous Trivy scan is successful
