@@ -39,12 +39,12 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ github.run_number }} # Using GitHub run number for versioning
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.hello # Using GitHub run number for versioning
 
       - name: Scan the Docker image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ github.run_number }}
+          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.hello
           format: 'table'
           exit-code: '1'
           ignore-unfixed: false
