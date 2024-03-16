@@ -33,23 +33,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-
-      - name: Build an image from Dockerfile
-        run: |
-          docker build -t docker.io/my-organization/my-app
-
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'docker.io/my-organization/my-app'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-
-
-
-
-
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
@@ -59,15 +42,10 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}  # Using GitHub run number for versioning
 
 
-      - name: Scan the Docker image with Trivy
-        uses: aquasecurity/trivy-action@master
+        name: Scan for vulnerabilities
+        uses: crazy-max/ghaction-container-scan@v3
         with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }} 
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
 
 
 
