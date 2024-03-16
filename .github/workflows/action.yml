@@ -58,7 +58,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ steps.docker_build.outputs.image }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ github.run_number }}
 
           
   increment_version:
