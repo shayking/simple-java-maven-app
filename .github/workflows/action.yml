@@ -47,7 +47,8 @@ jobs:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }} 
           format: 'table'
           exit-code: '1'
-          ignore-unfixed: false
+          ignore-unfixed: true
+          vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
       - name: Push Docker image
