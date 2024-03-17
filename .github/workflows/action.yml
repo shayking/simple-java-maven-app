@@ -18,7 +18,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Run OWASP Dependency-Check with Maven
-        run: mvn -B verify --file pom.xml
+        run: mvn -B verify org.owasp:dependency-check-maven:check
         # The OWASP Dependency-Check plugin is executed as part of the Maven build cycle..
 
 
