@@ -50,6 +50,10 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         continue-on-error: true
 
+      - name: Sign Docker image
+        run: |
+          docker trust sign ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
+
       - name: Push Docker image
         if: success()
         uses: docker/build-push-action@v5
