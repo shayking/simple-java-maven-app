@@ -27,7 +27,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      
+      - name: Install cosign
+        uses: sigstore/cosign-installer@main
+
 
 
       - name: Set up Docker Buildx
@@ -50,9 +52,17 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         continue-on-error: true
 
+      - name: Decode Cosign Private Key
+        env:
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+        run: |
+          echo "$COSIGN_PRIVATE_KEY" | base64 -d > cosign.key
+          chmod 600 cosign.key
+
       - name: Sign Docker image
         run: |
-          docker trust sign ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
+          cosign sign -key cosign.key ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
+
 
       - name: Push Docker image
         if: success()
