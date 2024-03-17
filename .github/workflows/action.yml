@@ -73,7 +73,7 @@ jobs:
         env:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
-          cosign sign --key cosign.key ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
+          cosign sign --key cosign.key --yes ${{ secrets.DOCKERHUB_USERNAME }}/action:1.0.${{ vars.VERSION }}
 
 
 
