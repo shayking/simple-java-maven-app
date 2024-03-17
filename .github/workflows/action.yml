@@ -19,7 +19,7 @@ jobs:
 
       - name: Run OWASP Dependency-Check with Maven
         run: mvn -B verify --file pom.xml
-        # The OWASP Dependency-Check plugin is executed as part of the Maven build cycle.
+        # The OWASP Dependency-Check plugin is executed as part of the Maven build cycle..
 
 
       - name: Run Maven package and SonarCloud analysis
